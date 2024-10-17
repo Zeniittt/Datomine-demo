@@ -29,7 +29,7 @@ public class MostarSpellCastState : HeroState
     {
         base.Exit();
 
-        hero.inTeleportTime = true;
+        hero.inTeleportTime = true; // Because after this state is teleport state (sneaky skill)
     }
 
     public override void Update()
@@ -41,7 +41,7 @@ public class MostarSpellCastState : HeroState
         if (CanCast())
         {
             hero.RandomPosition();
-            hero.CastSpell(hero.positionTeleport);
+            hero.CastSpell(hero.enemyPosition);
         }
 
         if (amountOfSpells <= 0)

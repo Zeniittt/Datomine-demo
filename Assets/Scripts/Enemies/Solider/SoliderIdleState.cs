@@ -14,7 +14,7 @@ public class SoliderIdleState : EnemyState
     {
         base.Enter();
 
-        stateTimer = enemy.idleTime;
+        stateTimer = enemy.idleTimeInitial;
     }
 
     public override void Exit()

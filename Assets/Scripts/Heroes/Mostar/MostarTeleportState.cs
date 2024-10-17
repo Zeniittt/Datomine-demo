@@ -37,9 +37,7 @@ public class MostarTeleportState : HeroState
                 else
                     stateMachine.ChangeState(hero.battleState);
                 //hero.inTeleportTime = false;*/
-            if (hero.currentStateIndex == hero.heroStates.Count)
-                hero.currentStateIndex = 0;
-            else
+
                 stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
 
         }

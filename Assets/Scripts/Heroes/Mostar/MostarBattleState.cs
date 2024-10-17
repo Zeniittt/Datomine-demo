@@ -15,6 +15,7 @@ public class MostarBattleState : HeroState
     {
         base.Enter();
 
+        hero.isInitialTime = false;
     }
 
     public override void Exit()
@@ -26,59 +27,7 @@ public class MostarBattleState : HeroState
     {
         base.Update();
 
-        /* if (Input.GetKeyDown(KeyCode.B))
-         {
-             hero.inTeleportTime = true;
-             stateMachine.ChangeState(hero.teleportState);
-         }
-
-         if (Input.GetKeyDown(KeyCode.Q))
-         {
-             if(hero.CanCastSpell())
-                 stateMachine.ChangeState(hero.spellCastState);
-         }
-
-         if (hero.IsEnemyDetected())
-         {
-             stateTimer = hero.battleTime;
-             if(CanAttack())
-             {
-                 if(CanCritical())
-                     stateMachine.ChangeState(hero.criticalAttackState);
-                 else
-                     stateMachine.ChangeState(hero.normalAttackState);
-             }
-
-         }
-         else
-         {
-             stateMachine.ChangeState(hero.idleState);
-         }
-
-         //hero.SetVelocity(hero.moveSpeed * hero.facingDirection, rigidbody.velocity.y);  */
-
         stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
-
     }
-
-    private bool CanAttack()
-    {
-        if(Time.time >= hero.attackCooldown + hero.recentAttacked)
-        {
-            hero.recentAttacked = Time.time;
-            return true;
-        }
-
-        return false;
-    }
-
-    private bool CanCritical()
-    {
-        if(hero.countOfAttack == hero.criticalAttack)
-            return true;
-
-        return false;
-    }
-
 
 }

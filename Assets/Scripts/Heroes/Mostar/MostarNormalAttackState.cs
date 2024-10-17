@@ -14,9 +14,7 @@ public class MostarNormalAttackState : HeroState
     public override void Enter()
     {
         base.Enter();
-
-        /*        hero.countOfAttack++;*/
-
+        
         hero.currentStateIndex++;
     }
 
@@ -24,7 +22,6 @@ public class MostarNormalAttackState : HeroState
     {
         base.Exit();
 
-        hero.recentAttacked = Time.time;
     }
 
     public override void Update()
@@ -35,7 +32,7 @@ public class MostarNormalAttackState : HeroState
 
         if (triggerCalled)
         {
-            stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
+            hero.MostarMovement();
         }
     }
 }

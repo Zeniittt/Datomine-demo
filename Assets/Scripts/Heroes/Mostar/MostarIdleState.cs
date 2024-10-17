@@ -12,7 +12,17 @@ public class MostarIdleState : MostarGroundedState
     {
         base.Enter();
 
-        stateTimer = hero.idleTime;
+
+        if (hero.isInitialTime)
+        {
+            stateTimer = hero.idleTimeInitial;
+
+        } else
+        {
+            stateTimer = hero.idleTime;
+            hero.currentStateIndex++;
+
+        }
     }
 
     public override void Exit()
@@ -24,7 +34,18 @@ public class MostarIdleState : MostarGroundedState
     {
         base.Update();
 
+        hero.SetZeroVelocity();
+        
         if (stateTimer < 0)
-            stateMachine.ChangeState(hero.moveState);
+        {
+            if (hero.isInitialTime)
+                stateMachine.ChangeState(hero.moveState);
+            else
+            {
+                hero.MostarMovement();
+            }
+        }
+            
+
     }
 }

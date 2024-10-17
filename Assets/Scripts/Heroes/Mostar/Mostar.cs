@@ -17,25 +17,21 @@ public class Mostar : Hero
 
     #endregion
 
-    [Header("Critical Informations")]
-    public int countOfAttack;
-    public int criticalAttack;
+
+    [HideInInspector] public Vector3 enemyPosition;
+    private Vector3 initalPosition;
 
     [Header("Teleport Informations")]
     public Vector2 boxSize;
     public List<Enemy> enemies;
     [SerializeField] private float xOffset;
     public bool inTeleportTime;
-    public Vector3 positionTeleport;
-    public Vector3 initalPosition;
 
     [Header("Spell Informations")]
     [SerializeField] private GameObject spellPrefab;
     public int amountOfSpells;
     public float spellCooldown;
-    private float lastTimeCast;
     [SerializeField] private int yOffset;
-    [SerializeField] private float spellStateCooldown;
 
     [Header("States Order")]
     public List<HeroState> heroStates;
@@ -61,20 +57,29 @@ public class Mostar : Hero
         heroStates = new List<HeroState>
         {
             normalAttackState,
+            idleState,
             normalAttackState,
+            idleState,
             criticalAttackState,
+            idleState,
             spellCastState,
+            idleState,
             teleportState,
             criticalAttackState,
             teleportState,
+            idleState,
         };
 
+        isInitialTime = true;
         stateMachine.Initialize(idleState);
     }
 
     protected override void Update()
     {
         base.Update();
+
+        if (currentStateIndex == heroStates.Count)
+            currentStateIndex = 0;
     }
 
     public void FindAllEnemiesInArea(Vector2 _position)
@@ -107,7 +112,7 @@ public class Mostar : Hero
 
         int facingDirectionEnemy = enemy.GetComponent<Enemy>().facingDirection;
 
-        positionTeleport = new Vector3(enemy.position.x, enemy.position.y, facingDirectionEnemy);
+        enemyPosition = new Vector3(enemy.position.x, enemy.position.y, facingDirectionEnemy);
     }
 
     public void TeleportToPosition()
@@ -117,22 +122,21 @@ public class Mostar : Hero
             FindAllEnemiesInArea(transform.position);
             RandomPosition();
 
+            initalPosition = transform.position;
 
-            if (positionTeleport.z == -1)
+            if (enemyPosition.z == -1)
             {
-                initalPosition = transform.position;
                 Flip();
 
-                transform.position = new Vector3(positionTeleport.x + xOffset, positionTeleport.y);
+                transform.position = new Vector3(enemyPosition.x + xOffset, enemyPosition.y);
             }
             else
             {
-                initalPosition = transform.position;
-                transform.position = new Vector3(positionTeleport.x - xOffset, positionTeleport.y);
+
+                transform.position = new Vector3(enemyPosition.x - xOffset, enemyPosition.y);
             }
         } else
         {
-            Debug.Log("toiday");
 
             transform.position = initalPosition;
             Flip();
@@ -149,12 +153,16 @@ public class Mostar : Hero
         GameObject newSpell = Instantiate(spellPrefab, spellPosition, Quaternion.identity);
     }
 
-    public bool CanCastSpell()
+
+    public void MostarMovement()
     {
-        if (Time.time >= lastTimeCast + spellStateCooldown)
+        if (IsEnemyDetected())
         {
-            return true;
+            stateMachine.ChangeState(heroStates[currentStateIndex]);
         }
-        return false;
+        else
+        {
+            stateMachine.ChangeState(moveState);
+        }
     }
 }

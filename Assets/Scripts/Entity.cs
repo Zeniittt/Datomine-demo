@@ -20,9 +20,11 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float detectEnemyDistance = 2;
     [SerializeField] protected LayerMask whatIsEnemy;
 
-    [SerializeField] public float moveSpeed;
-    [SerializeField] public float idleTime;
-    [SerializeField] public float battleTime;
+    public float moveSpeed;
+    public bool isInitialTime;
+    public float idleTimeInitial;
+    public float idleTime;
+    public float battleTime;
 
 
     protected virtual void Awake()

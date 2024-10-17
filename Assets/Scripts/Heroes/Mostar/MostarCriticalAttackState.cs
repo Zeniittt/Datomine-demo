@@ -15,9 +15,6 @@ public class MostarCriticalAttackState : HeroState
     {
         base.Enter();
 
-/*        if(hero.inTeleportTime == false)
-            hero.countOfAttack = 0;*/
-
         hero.currentStateIndex++;
     }
 
@@ -36,15 +33,18 @@ public class MostarCriticalAttackState : HeroState
 
         if (triggerCalled)
         {
-            /*if(hero.inTeleportTime == true)
-            {
-                stateMachine.ChangeState(hero.teleportState);
-            } else
-            {
-                stateMachine.ChangeState(hero.battleState);
-            }*/
 
-            stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
+            if(hero.IsEnemyDetected())
+            {
+                stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
+            }
+            else
+            {
+                if (hero.heroStates[hero.currentStateIndex-2] == hero.teleportState)
+                    stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
+                else
+                    stateMachine.ChangeState(hero.moveState);
+            }
         }
     }
 }

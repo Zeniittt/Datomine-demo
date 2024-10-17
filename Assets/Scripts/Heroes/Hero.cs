@@ -7,11 +7,6 @@ public class Hero : Entity
 
     public HeroStateMachine stateMachine {get; private set;}
 
-    [Header("Attack Information")]
-    public float attackDistance;
-    public float attackCooldown;
-    [HideInInspector] public float recentAttacked;
-
     protected override void Awake()
     {
         base.Awake();
