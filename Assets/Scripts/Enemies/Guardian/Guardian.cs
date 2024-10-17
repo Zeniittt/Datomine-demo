@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solider : Enemy
+public class Guardian : Enemy
 {
     #region
 
-    public SoliderIdleState idleState { get; private set; }
-    public SoliderMoveState moveState { get; private set; }
+    public GuardianIdleState idleState { get; private set; }
+    public GuardianMoveState moveState { get; private set; }
 
     #endregion
 
@@ -15,8 +15,8 @@ public class Solider : Enemy
     {
         base.Awake();
 
-        idleState = new SoliderIdleState(this, stateMachine, "Idle", this);
-        moveState = new SoliderMoveState(this, stateMachine, "Move", this);
+        idleState = new GuardianIdleState(this, stateMachine, "Idle", this);
+        moveState = new GuardianMoveState(this, stateMachine, "Move", this);
     }
 
     protected override void Start()

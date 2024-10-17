@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoliderMoveState : EnemyState
+public class GuardianMoveState : EnemyState
 {
-    protected Solider enemy;
-    public SoliderMoveState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Solider _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    protected Guardian enemy;
+    public GuardianMoveState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Guardian _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
     {
         this.enemy = _enemy;
     }
@@ -24,7 +24,7 @@ public class SoliderMoveState : EnemyState
     {
         base.Update();
 
-        enemy.SetVelocity(-enemy.moveSpeed, rigidbody.velocity.y);
+        enemy.SetVelocity(enemy.moveSpeed * enemy.facingDirection, rigidbody.velocity.y);
 
         if (enemy.IsEnemyDetected())
             stateMachine.ChangeState(enemy.idleState);

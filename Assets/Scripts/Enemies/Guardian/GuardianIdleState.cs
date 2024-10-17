@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoliderIdleState : EnemyState
+public class GuardianIdleState : EnemyState
 {
-    protected Solider enemy;
-    public SoliderIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Solider _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    protected Guardian enemy;
+    public GuardianIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Guardian _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
     {
         this.enemy = _enemy;
     }
@@ -25,6 +25,8 @@ public class SoliderIdleState : EnemyState
     public override void Update()
     {
         base.Update();
+
+        enemy.SetZeroVelocity();
 
         if (stateTimer < 0)
             stateMachine.ChangeState(enemy.moveState);

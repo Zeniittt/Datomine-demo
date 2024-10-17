@@ -24,7 +24,6 @@ public class Entity : MonoBehaviour
     public bool isInitialTime;
     public float idleTimeInitial;
     public float idleTime;
-    public float battleTime;
 
 
     protected virtual void Awake()
