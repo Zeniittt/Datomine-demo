@@ -20,8 +20,6 @@ public class MostarIdleState : MostarGroundedState
         } else
         {
             stateTimer = hero.idleTime;
-            hero.currentStateIndex++;
-
         }
     }
 

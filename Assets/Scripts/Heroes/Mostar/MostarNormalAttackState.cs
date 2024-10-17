@@ -15,7 +15,6 @@ public class MostarNormalAttackState : HeroState
     {
         base.Enter();
         
-        hero.currentStateIndex++;
     }
 
     public override void Exit()

@@ -80,7 +80,7 @@ public class Mostar : Hero
     {
         base.Update();
 
-        if (currentStateIndex == heroStates.Count)
+        if (currentStateIndex == heroStates.Count - 1)
             currentStateIndex = 0;
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -163,6 +163,7 @@ public class Mostar : Hero
     {
         if (IsEnemyDetected())
         {
+            currentStateIndex++;
             stateMachine.ChangeState(heroStates[currentStateIndex]);
         }
         else

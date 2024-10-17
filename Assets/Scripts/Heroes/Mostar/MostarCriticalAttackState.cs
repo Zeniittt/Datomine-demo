@@ -14,8 +14,6 @@ public class MostarCriticalAttackState : HeroState
     public override void Enter()
     {
         base.Enter();
-
-        hero.currentStateIndex++;
     }
 
     public override void Exit()
@@ -36,6 +34,7 @@ public class MostarCriticalAttackState : HeroState
 
             if(hero.IsEnemyDetected())
             {
+                hero.currentStateIndex++;
                 stateMachine.ChangeState(hero.heroStates[hero.currentStateIndex]);
             }
             else
