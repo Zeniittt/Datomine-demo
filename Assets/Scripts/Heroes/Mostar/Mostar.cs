@@ -14,6 +14,7 @@ public class Mostar : Hero
     public MostarCriticalAttackState criticalAttackState { get; private set; }
     public MostarTeleportState teleportState { get; private set; }
     public MostarSpellCastState spellCastState { get; private set; }
+    public MostarUltimateSkillState ultimateState { get; private set; }
 
     #endregion
 
@@ -48,6 +49,7 @@ public class Mostar : Hero
         criticalAttackState = new MostarCriticalAttackState(this, stateMachine, "Critical", this);
         teleportState = new MostarTeleportState(this, stateMachine, "Teleport", this);
         spellCastState = new MostarSpellCastState(this, stateMachine, "SpellCast", this);
+        ultimateState = new MostarUltimateSkillState(this, stateMachine, "SpellCast", this);
     }
 
     protected override void Start()
@@ -80,6 +82,9 @@ public class Mostar : Hero
 
         if (currentStateIndex == heroStates.Count)
             currentStateIndex = 0;
+
+        if (Input.GetKeyDown(KeyCode.R))
+            stateMachine.ChangeState(ultimateState);
     }
 
     public void FindAllEnemiesInArea(Vector2 _position)
@@ -164,5 +169,27 @@ public class Mostar : Hero
         {
             stateMachine.ChangeState(moveState);
         }
+    }
+
+    public override void UseUltimateSkill()
+    {
+        base.UseUltimateSkill();
+
+        foreach (Enemy enemy in enemies)
+        {
+            CastSpell(enemy.transform.position);
+        }
+    }
+
+    IEnumerator CallUltimateSkill()
+    {
+        yield return new WaitForSeconds(1f);
+
+        UseUltimateSkill();
+    }
+
+    public void CallUltimateSkillWithDelay()
+    {
+        StartCoroutine(CallUltimateSkill());
     }
 }

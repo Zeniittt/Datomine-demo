@@ -29,5 +29,6 @@ public class Hero : Entity
 
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
+    public virtual void UseUltimateSkill() { }
 
 }
